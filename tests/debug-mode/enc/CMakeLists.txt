@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-include(add_enclave_executable)
+
 
 add_enclave_executable(no_debug_enc sign.conf
     enc.c

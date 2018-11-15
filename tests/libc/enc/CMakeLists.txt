@@ -6,7 +6,7 @@
 # Disabling warning-as-errors for the specific warnings is painful across multiple different compilers.
 # It was agreed to, that it is best to just disable warnings-as-errors for these tests specifically.
 
-include(add_enclave_executable)
+
 include(${CMAKE_CURRENT_LIST_DIR}/../../../cmake/get_testcase_name.cmake)
 
 # helper lib to contain file needed by some tests

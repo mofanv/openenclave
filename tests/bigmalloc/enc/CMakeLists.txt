@@ -4,6 +4,7 @@
 include(oeedl_file)
 include(add_enclave_executable)
 
+
 oeedl_file(../bigmalloc.edl enclave gen)
 
 # Unlike other tests, this test explicitly requires a signed enclave

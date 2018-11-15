@@ -4,6 +4,7 @@
 include(oeedl_file)
 include(add_enclave_executable)
 
+
 oeedl_file(../props.edl enclave gen)
 
 add_enclave_executable(props_enc sign.conf enc.c props.c ${gen})

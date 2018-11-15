@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 include(oeedl_file)
-include(add_enclave_executable)
+
 
 oeedl_file(../tests.edl enclave gen)
 add_executable(report_enc enc.cpp datetime.cpp ${gen})

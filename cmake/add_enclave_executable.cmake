@@ -19,7 +19,12 @@
 #   (complicating install rules)
 #
 function(add_enclave_executable BIN SIGNCONF)
-	add_executable(${BIN} ${ARGN})
+#	add_library(${BIN} ${ARGN})
+add_executable(${BIN} ${ARGN})
+
+#set_property(TARGET ${BIN} PROPERTY
+#    PREFIX "")
+#set_property(TARGET ${BIN} PROPERTY SUFFIX "")
 
 	# custom rule to generate signing key
 	add_custom_command(OUTPUT ${BIN}-private.pem
