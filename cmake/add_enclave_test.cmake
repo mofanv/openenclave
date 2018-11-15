@@ -42,7 +42,7 @@ if (ADD_WINDOWS_ENCLAVE_TESTS)
 	add_test(${TEST_NAME} ${HOST_SUBPATH}/${HOST_FILE} ${HOST_SUBPATH}/${ENC_FILE} ${ARGN})
 
 elseif (UNIX)
-    add_test(${TEST_NAME} ${HOST_SUBPATH}/${HOST_FILE} ${ENC_SUBPATH}/${ENC_FILE} ${ARGN})
+    add_test(NAME ${TEST_NAME} COMMAND $<TARGET_FILE:${HOST_FILE}> $<TARGET_FILE:${ENC_FILE}> ${ARGN})
 endif()
 
 endfunction(add_enclave_test)
