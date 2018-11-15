@@ -786,6 +786,9 @@ oe_result_t oe_create_enclave(
     /* Invoke enclave initialization. */
     OE_CHECK(_initialize_enclave(enclave));
 
+    /* Setup logging configuration */
+    oe_log_enclave_init(enclave);
+
     *enclave_out = enclave;
     result = OE_OK;
 

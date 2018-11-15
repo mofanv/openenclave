@@ -16,6 +16,7 @@
 #include <openenclave/internal/raise.h>
 #include <openenclave/internal/sgxtypes.h>
 #include <openenclave/internal/thread.h>
+#include <openenclave/internal/trace.h>
 #include <openenclave/internal/utils.h>
 #include "../report.h"
 #include "asmdefs.h"
@@ -470,6 +471,11 @@ static void _handle_ecall(
         case OE_ECALL_VERIFY_REPORT:
         {
             oe_handle_verify_report(arg_in, &arg_out);
+            break;
+        }
+        case OE_ECALL_LOG_INIT:
+        {
+            _handle_oelog_init(arg_in);
             break;
         }
         default:

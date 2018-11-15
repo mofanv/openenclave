@@ -300,10 +300,11 @@ static oe_result_t _write_request(
     oe_result_t result = OE_UNEXPECTED;
     mem_t envelope = MEM_DYNAMIC_INIT;
 
-#if (OE_TRACE_LEVEL >= OE_TRACE_LEVEL_INFO)
-    OE_TRACE_INFO("=== _write_request:\n");
-    oe_hex_dump(mem_ptr(message), mem_size(message));
-#endif
+    if (get_current_logging_level() >= OE_LOG_LEVEL_INFO)
+    {
+        OE_TRACE_INFO("=== _write_request:\n");
+        oe_hex_dump(mem_ptr(message), mem_size(message));
+    }
 
     /* Wrap message in envelope */
     OE_CHECK(
@@ -387,10 +388,11 @@ static oe_result_t _read_response(
         mem_cat(message, mem_ptr(&envelope) + pos, size);
     }
 
-#if (OE_TRACE_LEVEL >= OE_TRACE_LEVEL_INFO)
-    OE_TRACE_INFO("=== _read_response():\n");
-    oe_hex_dump(mem_ptr(message), mem_size(message));
-#endif
+    if (get_current_logging_level() >= OE_LOG_LEVEL_INFO)
+    {
+        OE_TRACE_INFO("=== _read_response():\n");
+        oe_hex_dump(mem_ptr(message), mem_size(message));
+    }
 
     result = OE_OK;
 

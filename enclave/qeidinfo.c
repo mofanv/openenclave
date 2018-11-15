@@ -10,6 +10,7 @@
 #include "../common/qeidentity.h"
 
 #include <stdio.h>
+
 /**
  * Validate and copy buffer to enclave memory.
  */

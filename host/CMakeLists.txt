@@ -2,6 +2,16 @@
 # Licensed under the MIT License.
 
 if (UNIX)
+# Generate OE repo config file
+set(REPO_CONFIG_FILE ../../host/repo_config_info.h)
+add_custom_target(generate_repo_config
+    COMMAND rm -f ${REPO_CONFIG_FILE}
+    COMMENT "Generating ${REPO_CONFIG_FILE}"
+    COMMAND sh ../../host/gen_repo_config_header.sh ${REPO_CONFIG_FILE}
+)
+endif()
+
+if (UNIX)
 set(PLATFORM_SRC
     ../common/asn1.c
     ../common/cert.c
@@ -64,6 +74,7 @@ add_library(oehost STATIC
     loadpe.c
     memalign.c
     ocalls.c
+    traceh.c
     quote.c
     registers.c
     report.c
@@ -79,6 +90,8 @@ add_library(oehost STATIC
     crypto/sha.c
     ${PLATFORM_SRC}
     )
+
+add_dependencies(oehost generate_repo_config)
 
 # we and dependents need the OE includes to compile
 target_link_libraries(oehost PUBLIC oe_includes)
@@ -115,10 +128,7 @@ find_library(LIBSGX_COMMON NAMES sgx_enclave_common)
 find_library(LIBSGX_QE NAMES sgx_dcap_ql)
 find_library(LIBSGX_URTS NAMES sgx_urts)
 target_link_libraries(oehost PUBLIC ${LIBSGX_COMMON} ${LIBSGX_QE} ${LIBSGX_URTS})
-endif()
-
-if(OE_TRACE_LEVEL)
-    target_compile_definitions(oehost PUBLIC "OE_TRACE_LEVEL=${OE_TRACE_LEVEL}")
+target_compile_definitions(oehost PRIVATE OE_USE_LIBSGX)
 endif()
 
 if(USE_DEBUG_MALLOC)
