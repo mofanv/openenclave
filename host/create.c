@@ -53,6 +53,7 @@ static const char* get_fullpath(const char* path)
 #include "memalign.h"
 #include "sgxload.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
 static oe_once_type _enclave_init_once;
 
 static void _initialize_exception_handling(void)
@@ -785,6 +786,9 @@ oe_result_t oe_create_enclave(
 
     /* Invoke enclave initialization. */
     OE_CHECK(_initialize_enclave(enclave));
+
+    /* Setup logging configuration */
+    oe_log_enclave_init(enclave, OE_ENCLAVE_FLAG_DEBUG & flags);
 
     *enclave_out = enclave;
     result = OE_OK;

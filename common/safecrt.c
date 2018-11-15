@@ -5,6 +5,8 @@
 #include <openenclave/internal/raise.h>
 #include "common.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_OTHERS;
+
 oe_result_t oe_memcpy_s(
     void* dst,
     size_t dst_size,

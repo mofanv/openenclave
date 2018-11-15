@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#define OE_TRACE_LEVEL 1
-
 #include <assert.h>
 #include <errno.h>
 #include <openenclave/bits/defs.h>
@@ -25,6 +23,8 @@
 #include "memalign.h"
 #include "sgxload.h"
 #include "strings.h"
+
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
 
 static oe_result_t _oe_free_elf_image(oe_enclave_image_t* image)
 {
@@ -316,7 +316,6 @@ done:
     return result;
 }
 
-#if (OE_TRACE_LEVEL >= OE_TRACE_LEVEL_INFO)
 OE_INLINE void _dump_relocations(const void* data, size_t size)
 {
     const elf64_rela_t* p = (const elf64_rela_t*)data;
@@ -335,7 +334,6 @@ OE_INLINE void _dump_relocations(const void* data, size_t size)
             OE_LLD(p->r_addend));
     }
 }
-#endif
 
 static oe_result_t _calculate_size(
     const oe_enclave_image_t* image,
@@ -755,9 +753,10 @@ oe_result_t oe_load_elf_enclave_image(
         0)
         OE_RAISE(OE_FAILURE);
 
-#if (OE_TRACE_LEVEL >= OE_TRACE_LEVEL_INFO)
-    _dump_relocations(image->reloc_data, image->reloc_size);
-#endif
+    if (get_current_logging_level() >= OE_LOG_LEVEL_INFO)
+    {
+        _dump_relocations(image->u.elf.reloc_data, image->reloc_size);
+    }
 
     image->type = OE_IMAGE_TYPE_ELF;
     image->calculate_size = _calculate_size;

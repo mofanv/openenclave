@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#define OE_TRACE_LEVEL 1
-
 #include <assert.h>
 #include <openenclave/bits/defs.h>
 #include <openenclave/bits/safemath.h>
@@ -19,6 +17,8 @@
 #include "memalign.h"
 #include "sgxload.h"
 #include "strings.h"
+
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
 
 #if defined(_WIN32)
 #include <windows.h>

@@ -16,6 +16,8 @@
 #include <sys/types.h>
 #include "fopen.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
+
 bool __oe_file_exists(const char* path)
 {
     struct stat st;

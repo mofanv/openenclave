@@ -8,6 +8,8 @@
 #include <openenclave/internal/utils.h>
 #include "common.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_CERT;
+
 static oe_result_t _find_url(
     const uint8_t* data,
     size_t size,

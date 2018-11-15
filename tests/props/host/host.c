@@ -10,6 +10,8 @@
 #include "../../../host/enclave.h"
 #include "props_u.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 static void _check_properties(
     oe_sgx_enclave_properties_t* props,
     bool is_signed,

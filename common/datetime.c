@@ -4,6 +4,8 @@
 #include <openenclave/internal/datetime.h>
 #include <openenclave/internal/raise.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_OTHERS;
+
 #define UNIX_EPOCH_YEAR (1970)
 
 oe_result_t oe_datetime_is_valid(const oe_datetime_t* datetime)

@@ -10,6 +10,8 @@
 #include "pem.h"
 #include "random.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 static uint64_t _PRIVATE_KEY_MAGIC = 0xd48de5bae3994b41;
 static uint64_t _PUBLIC_KEY_MAGIC = 0x713600af058c447a;
 

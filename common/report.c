@@ -9,6 +9,8 @@
 #include <openenclave/internal/utils.h>
 #include "common.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_GET_REPORT;
+
 static oe_result_t _oe_parse_sgx_report_body(
     const sgx_report_body_t* report_body,
     bool remote,

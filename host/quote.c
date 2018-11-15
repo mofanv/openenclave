@@ -17,6 +17,8 @@
 #include <openenclave/internal/aesm.h>
 #endif
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_VERIFY_REPORT;
+
 #if !defined(OE_USE_LIBSGX)
 
 static oe_result_t _sgx_init_quote_with_aesm(sgx_target_info_t* target_info)

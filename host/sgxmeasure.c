@@ -7,6 +7,9 @@
 #include <openenclave/internal/sgxtypes.h>
 #include <openenclave/internal/trace.h>
 
+static const uint32_t trace_flag =
+    OE_LOG_FLAGS_SGX_SPECIFIC | OE_LOG_FLAGS_IMAGE_LOADING;
+
 static void _measure_zeros(oe_sha256_context_t* context, size_t size)
 {
     char zeros[128] = {0};

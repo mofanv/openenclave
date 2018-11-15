@@ -30,6 +30,8 @@
 #include "sgxmeasure.h"
 #include "signkey.h"
 
+static const uint32_t trace_flag =
+    OE_LOG_FLAGS_SGX_SPECIFIC | OE_LOG_FLAGS_IMAGE_LOADING;
 static uint32_t _make_memory_protect_param(uint64_t inflags, bool simulate)
 {
     uint32_t outflags = 0;

@@ -7,6 +7,8 @@
 #include <openenclave/internal/raise.h>
 #include <openenclave/internal/sha.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 typedef struct _oe_sha256_context_impl
 {
     mbedtls_sha256_context ctx;

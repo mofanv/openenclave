@@ -12,6 +12,8 @@
 #include "qeidentity.h"
 #include "revocation.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_VERIFY_REPORT;
+
 #ifdef OE_USE_LIBSGX
 
 // Public key of Intel's root certificate.

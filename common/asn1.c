@@ -6,6 +6,8 @@
 #include <openenclave/internal/asn1.h>
 #include <openenclave/internal/raise.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_COMMON;
+
 oe_result_t oe_asn1_get_tag(
     oe_asn1_t* asn1,
     bool* constructed,

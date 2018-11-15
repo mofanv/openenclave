@@ -14,6 +14,8 @@
 #error "optimized __builtin_return_address() not supported by Intel compiler"
 #endif
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 /* Return null if address is outside of the enclave; else return ptr. */
 const void* _check_address(const void* ptr)
 {

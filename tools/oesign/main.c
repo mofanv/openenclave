@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include "../host/enclave.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
 static const char* arg0;
 
 OE_PRINTF_FORMAT(1, 2)

@@ -22,6 +22,8 @@
 #include "pem.h"
 #include "rsa.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 /*
 **==============================================================================
 **
@@ -766,7 +768,10 @@ oe_result_t oe_cert_verify(
             mbedtls_x509_crt_verify_info(
                 error->buf, sizeof(error->buf), "", flags);
         }
-
+        OE_TRACE(
+            OE_LOG_LEVEL_ERROR,
+            "mbedtls_x509_crt_verify failed with flags = %0x\n",
+            flags);
         OE_RAISE(OE_VERIFY_FAILED);
     }
 
@@ -788,7 +793,10 @@ oe_result_t oe_cert_verify(
                 mbedtls_x509_crt_verify_info(
                     error->buf, sizeof(error->buf), "", flags);
             }
-
+            OE_TRACE(
+                OE_LOG_LEVEL_ERROR,
+                "mbedtls_x509_crt_verify failed with flags = %0x\n",
+                flags);
             OE_RAISE(OE_VERIFY_FAILED);
         }
 

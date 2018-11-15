@@ -10,6 +10,8 @@
 #include "asmdefs.h"
 #include "report.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 OE_STATIC_ASSERT(sizeof(oe_seal_policy_t) == sizeof(unsigned int));
 
 /* The EGETKEY wrapper. */

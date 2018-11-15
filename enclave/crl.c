@@ -11,6 +11,8 @@
 #include <openenclave/internal/raise.h>
 #include <openenclave/internal/utils.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 /* Randomly generated magic number */
 #define OE_CRL_MAGIC 0xf8cf8e04f4ed40f3
 

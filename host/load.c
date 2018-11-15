@@ -12,6 +12,8 @@
 #include "linux/windows.h"
 #endif
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
+
 static oe_result_t _get_image_type(const char* path, oe_image_type* type)
 {
     oe_result_t result = OE_UNEXPECTED;

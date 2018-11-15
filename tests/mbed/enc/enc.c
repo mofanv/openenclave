@@ -22,6 +22,8 @@
 #include "../syscall_args.h"
 #include "mbed_t.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 int main(int argc, const char* argv[]);
 struct mbed_args gmbed_args;
 

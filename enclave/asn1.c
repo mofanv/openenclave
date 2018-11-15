@@ -11,6 +11,8 @@
 #include <openenclave/internal/raise.h>
 #include <openenclave/internal/utils.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_OTHERS;
+
 OE_STATIC_ASSERT(MBEDTLS_ASN1_CONSTRUCTED == OE_ASN1_TAG_CONSTRUCTED);
 OE_STATIC_ASSERT(MBEDTLS_ASN1_SEQUENCE == OE_ASN1_TAG_SEQUENCE);
 OE_STATIC_ASSERT(MBEDTLS_ASN1_INTEGER == OE_ASN1_TAG_INTEGER);

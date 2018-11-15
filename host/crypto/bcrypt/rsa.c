@@ -20,6 +20,7 @@
 #include <openenclave/internal/utils.h>
 #include <wincrypt.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_CRYPTO;
 /*
  * Note that these structures were copied from the linux crypto/key.h file.
  * They can be consolidated once more crypto code is ported to Windows.

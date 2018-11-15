@@ -9,6 +9,7 @@
 #include <openenclave/internal/enclavelibc.h>
 #include <openenclave/internal/raise.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
 static uint32_t _oe_cpuid_table[OE_CPUID_LEAF_COUNT][OE_CPUID_REG_COUNT];
 
 /*

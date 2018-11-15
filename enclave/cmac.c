@@ -10,6 +10,8 @@
 #include <openenclave/internal/sgxtypes.h>
 #include <openenclave/internal/utils.h>
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 oe_result_t oe_aes_cmac_sign(
     const uint8_t* key,
     size_t key_size,

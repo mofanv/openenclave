@@ -25,6 +25,8 @@
 #include <openssl/bn.h>
 #endif
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_TOOLS;
+
 static void _mem_reverse(void* dest_, const void* src_, size_t n)
 {
     unsigned char* dest = (unsigned char*)dest_;

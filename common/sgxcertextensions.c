@@ -11,6 +11,8 @@
 #include <string.h>
 #include "common.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_SGX_SPECIFIC;
+
 #define SGX_EXTENSION_OID_STR "1.2.840.113741.1.13.1"
 #define SGX_EXTENSION_OID "\x2a\x86\x48\x86\xf8\x4d\x01\x0d\x01"
 
@@ -202,10 +204,11 @@ done:
 
 static void _trace_hex_dump(const char* tag, const uint8_t* data, size_t size)
 {
-#if (OE_TRACE_LEVEL >= OE_TRACE_LEVEL_INFO)
-    OE_TRACE_INFO("%s = ", tag);
-    oe_hex_dump(data, size);
-#endif
+    if (get_current_logging_level() >= OE_LOG_LEVEL_INFO)
+    {
+        OE_TRACE_INFO("%s = ", tag);
+        oe_hex_dump(data, size);
+    }
 }
 
 /**

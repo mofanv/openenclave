@@ -8,6 +8,8 @@
 #include "common.h"
 #include "tcbinfo.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_VERIFY_REPORT;
+
 // hardcoded property values used for validating quoting enclave when qe
 // identity info is not available
 // The mrsigner value of Intel's Production quoting enclave.

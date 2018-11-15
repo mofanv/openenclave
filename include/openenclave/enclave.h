@@ -504,6 +504,18 @@ oe_enclave_t* oe_get_enclave(void);
  */
 oe_result_t oe_random(void* data, size_t size);
 
+/**
+ * Enable enable OE SDK logging for enclave code path
+ *
+ * This function allows an enclave to opt-in SDK logging for enclave operations
+ *
+ * @param enabled: when set to true, this parameter tells OE SDK to enable
+ * logging enclave related operations set to false to disbale it. The default
+ * behavior is disabled.
+ *
+ */
+void oe_enable_sdk_logging(bool enabled);
+
 OE_EXTERNC_END
 
 #endif /* _OE_ENCLAVE_H */

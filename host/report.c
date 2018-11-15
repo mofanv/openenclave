@@ -16,6 +16,8 @@
 #include "sgxquoteprovider.h"
 #endif
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_GET_REPORT;
+
 OE_STATIC_ASSERT(OE_REPORT_DATA_SIZE == sizeof(sgx_report_data_t));
 
 static oe_result_t _oe_get_local_report(

@@ -15,6 +15,8 @@
 #include <openenclave/internal/utils.h>
 #include "../common/quote.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_ALL;
+
 OE_STATIC_ASSERT(OE_REPORT_DATA_SIZE == sizeof(sgx_report_data_t));
 
 static oe_result_t _oe_get_report_key(

@@ -30,6 +30,8 @@
 #include "enclave.h"
 #include "ocalls.h"
 
+static const uint32_t trace_flag = OE_LOG_FLAGS_IMAGE_LOADING;
+
 /*
 **==============================================================================
 **
@@ -492,6 +494,10 @@ static oe_result_t _handle_ocall(
 
         case OE_OCALL_BACKTRACE_SYMBOLS:
             oe_handle_backtrace_symbols(enclave, arg_in);
+            break;
+
+        case OE_OCALL_LOG:
+            oe_handle_log(enclave, arg_in);
             break;
 
         default:
