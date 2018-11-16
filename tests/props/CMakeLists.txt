@@ -7,7 +7,7 @@ if (UNIX)
 	add_subdirectory(enc)
 
 	# Test unsigned enclave:
-	add_enclave_test(tests/props_unsigned ./host props_host ./enc props_enc unsigned)
+	add_enclave_test(tests/props_unsigned ./host props_host ./enc props_enc_unsigned unsigned)
 endif()
 
 # Test a signed enclave:
