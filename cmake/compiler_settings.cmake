@@ -84,6 +84,7 @@ elseif (MSVC)
   # MSVC options go here
 endif ()
 
+
 # Use ML64 as assembler on Windows
 if (WIN32)
   set(CMAKE_ASM_MASM_COMPILER "ml64")

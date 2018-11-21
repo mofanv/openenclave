@@ -62,9 +62,11 @@ target_compile_options(oecore PUBLIC
     -nostdinc
     -fno-stack-protector
     -fvisibility=hidden
-    -Wno-error=unused-command-line-argument
     )
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options(oecore PUBLIC -Wno-error=unused-command-line-argument)
+endif()
 
 
 target_compile_options(oecore INTERFACE $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>)
