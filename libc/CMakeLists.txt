@@ -32,7 +32,7 @@ endif ()
 
 add_library(oelibc STATIC
     $<TARGET_OBJECTS:oelibasm>
-    ../common/rand.c
+    ../common/rand.s
     abort.S
     arc4random.c
     atexit.c

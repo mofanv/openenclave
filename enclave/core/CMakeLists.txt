@@ -13,7 +13,7 @@ endif()
 
 add_library(oecore STATIC
     ../../common/safecrt.c
-    ../../common/rand.c
+    ../../common/rand.s
     assert.c
     atexit.c
     backtrace.c
@@ -62,7 +62,10 @@ target_compile_options(oecore PUBLIC
     -nostdinc
     -fno-stack-protector
     -fvisibility=hidden
+    -Wno-error=unused-command-line-argument
     )
+
+
 
 target_compile_options(oecore INTERFACE $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>)
 
