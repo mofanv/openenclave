@@ -539,6 +539,26 @@ done:
     return result;
 }
 
+static oe_result_t _set_uint64_t_symbol(
+    oe_enclave_image_t* image,
+    const char* name,
+    uint64_t value)
+{
+    oe_result_t result = OE_UNEXPECTED;
+    elf64_sym_t sym = {0};
+    uint64_t* symbol_real_ptr = NULL;
+
+    if (elf64_find_symbol_by_name(&image->u.elf.elf, name, &sym) != 0)
+        goto done;
+
+    symbol_real_ptr = (uint64_t*)(image->image_base + sym.st_value);
+    *symbol_real_ptr = value ? value : sym.st_value;
+
+    result = OE_OK;
+done:
+    return result;
+}
+
 static oe_result_t _patch(
     oe_enclave_image_t* image,
     size_t ecall_size,
@@ -574,10 +594,15 @@ static oe_result_t _patch(
     oeprops->image_info.enclave_size = enclave_end;
     oeprops->image_info.oeinfo_rva = image->oeinfo_rva;
     oeprops->image_info.oeinfo_size = sizeof(oe_sgx_enclave_properties_t);
+    OE_CHECK(
+        _set_uint64_t_symbol(
+            image, "oe_enclave_rva", 0 /* Set address of symbol itself*/));
 
     /* reloc right after image */
     oeprops->image_info.reloc_rva = image->image_size;
     oeprops->image_info.reloc_size = image->reloc_size;
+    OE_CHECK(_set_uint64_t_symbol(image, "oe_reloc_rva", image->image_size));
+    OE_CHECK(_set_uint64_t_symbol(image, "oe_reloc_size", image->reloc_size));
 
     /* ecal right after reloc */
     oeprops->image_info.ecall_rva = image->image_size + image->reloc_size;
@@ -590,6 +615,7 @@ static oe_result_t _patch(
     memset(oeprops->sigstruct, 0, sizeof(oeprops->sigstruct));
 
     result = OE_OK;
+done:
     return result;
 }
 
