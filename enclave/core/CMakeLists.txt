@@ -2,18 +2,19 @@
 # Licensed under the MIT License.
 
 if (UNIX)
-set(PLATFORM_SRC
-    linux/reloc.c
-    )
+	set(PLATFORM_SRC
+			../../common/rand.c
+			linux/reloc.c
+	   )
 elseif (WIN32)
-set(PLATFORM_SRC
-    windows/reloc.c
-    )
+	set(PLATFORM_SRC
+			windows/reloc.c
+			../../common/rand.asm
+	   )
 endif()
 
 add_library(oecore STATIC
     ../../common/safecrt.c
-    ../../common/rand.s
     assert.c
     atexit.c
     backtrace.c

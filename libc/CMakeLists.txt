@@ -29,10 +29,20 @@ add_library(oelibasm OBJECT
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(oelibasm PRIVATE -Wno-error=unused-command-line-argument)
 endif ()
+ 
+if (UNIX)                                                              
+set(PLATFORM_SRC                                                       
+        ../common/rand.s                                               
+)                                                                      
+elseif (WIN32)                                                         
+set(PLATFORM_SRC                                                       
+        ../common/rand.asm                                             
+)                                                                      
+endif()    
+
 
 add_library(oelibc STATIC
     $<TARGET_OBJECTS:oelibasm>
-    ../common/rand.s
     abort.S
     arc4random.c
     atexit.c
@@ -657,7 +667,8 @@ add_library(oelibc STATIC
     ${MUSLSRC}/time/__year_to_secs.c
     ${MUSLSRC}/unistd/close.c
     ${MUSLSRC}/unistd/dup.c
-    ${MUSLSRC}/unistd/dup3.c)
+    ${MUSLSRC}/unistd/dup3.c
+    ${PLATFORM_SRC})
 
 set_property(TARGET oelibc PROPERTY C_STANDARD 99)
 
