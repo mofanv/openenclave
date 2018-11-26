@@ -19,23 +19,19 @@
 #   (complicating install rules)
 #
 function(target_make_enclave BIN SIGNCONF)
-#set_property(TARGET ${BIN} PROPERTY
-#    PREFIX "")
-#set_property(TARGET ${BIN} PROPERTY SUFFIX "")
-	# custom rule to generate signing key
-	add_custom_command(OUTPUT ${BIN}-private.pem
-		COMMAND openssl genrsa -out ${BIN}-private.pem -3 3072
-		)
+  # custom rule to generate signing key
+  add_custom_command(OUTPUT ${BIN}-private.pem
+    COMMAND openssl genrsa -out ${BIN}-private.pem -3 3072)
 
-	# custom rule to sign the binary
-	add_custom_command(OUTPUT ${BIN}.signed.so
-		COMMAND oesign $<TARGET_FILE:${BIN}> ${SIGNCONF} ${CMAKE_CURRENT_BINARY_DIR}/${BIN}-private.pem
-		DEPENDS oesign ${BIN} ${SIGNCONF} ${BIN}-private.pem
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-		)
+  # custom rule to sign the binary
+  add_custom_command(OUTPUT ${BIN}.signed.so
+    COMMAND oesign $<TARGET_FILE:${BIN}> ${SIGNCONF} ${CMAKE_CURRENT_BINARY_DIR}/${BIN}-private.pem
+    DEPENDS oesign ${BIN} ${SIGNCONF} ${BIN}-private.pem
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-	# signed binary is a default target
-	add_custom_target(${BIN}-signed ALL
-		DEPENDS ${BIN}.signed.so
-		)
-endfunction(target_make_enclave)
+  # signed binary is a default target
+  add_library(${BIN}-signed SHARED IMPORTED GLOBAL)
+  add_dependencies(${BIN}-signed ${BIN}.signed.so)
+  set_target_properties(${BIN}-signed PROPERTIES
+    IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/${BIN}.signed.so)
+endfunction()
