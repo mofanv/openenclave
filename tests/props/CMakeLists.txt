@@ -11,4 +11,4 @@ if (UNIX)
 endif()
 
 # Test a signed enclave:
-add_enclave_test(tests/props ./host props_host ./enc props_enc signed)
+add_enclave_test(tests/props ./host props_host ./enc props_enc_signed signed)

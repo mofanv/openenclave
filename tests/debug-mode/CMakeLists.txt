@@ -10,8 +10,8 @@ if (UNIX)
 	set_tests_properties(tests/debug-unsigned PROPERTIES SKIP_RETURN_CODE 2)
 endif()
 
-add_enclave_test(tests/debug-signed ./host debug_host ./enc debug_enc debug signed)
-add_enclave_test(tests/nodebug-signed ./host debug_host ./enc no_debug_enc nodebug signed)
+add_enclave_test(tests/debug-signed ./host debug_host ./enc debug_enc_signed debug signed)
+add_enclave_test(tests/nodebug-signed ./host debug_host ./enc no_debug_enc_signed nodebug signed)
 add_enclave_test(tests/nodebug-unsigned ./host debug_host ./enc no_debug_enc nodebug unsigned)
 
 set_tests_properties(tests/debug-signed PROPERTIES SKIP_RETURN_CODE 2)
