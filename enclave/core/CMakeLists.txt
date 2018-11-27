@@ -3,7 +3,7 @@
 
 if (UNIX)
 	set(PLATFORM_SRC
-			../../common/rand.c
+			../../common/rand.s
 			linux/reloc.c
 	   )
 elseif (WIN32)
