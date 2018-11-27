@@ -48,6 +48,9 @@ add_library(oecore STATIC
     ${PLATFORM_SRC}
     )
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+add_compile_options(-Wno-error=unused-command-line-argument)
+endif ()
 target_link_libraries(oecore PUBLIC oe_includes)
 
 # This directory contains dummy C headers needed by dlmalloc:

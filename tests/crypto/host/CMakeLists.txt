@@ -1,14 +1,20 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+add_compile_options(-Wno-error=unused-command-line-argument)
+endif ()
 set(DATA_DIR "../data")
 add_executable(hostcrypto 
     main.c
+    ../../../common/rand.s
     ../read_file.c
     ../asn1_tests.c
     ../crl_tests.c
     ../ec_tests.c
     ../hash.c
     ../random_tests.c
+    ../rdrand_test.c
     ../rsa_tests.c
     ../sha_tests.c
     ../tests.c)
@@ -109,5 +115,4 @@ COMMAND openssl dgst -sha256 -sign ${DATA_DIR}/Leaf.key.pem -out ${DATA_DIR}/tes
 
 )
 target_link_libraries(hostcrypto oehost)
-
 add_test(tests/crypto/host hostcrypto)
