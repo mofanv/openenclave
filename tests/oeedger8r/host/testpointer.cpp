@@ -185,6 +185,8 @@ void test_pointer_edl_ecalls(oe_enclave_t* enclave)
     if (g_enabled[TYPE_UNSIGNED_LONG])
         test_ecall_pointer_fun<unsigned long>(
             enclave, ecall_pointer_unsigned_long);
+    test_ecall_pointer_fun<unsigned long long>(
+        enclave, ecall_pointer_unsigned_long_long);
     if (g_enabled[TYPE_LONG_DOUBLE])
         test_ecall_pointer_fun<long double>(enclave, ecall_pointer_long_double);
 
@@ -1161,6 +1163,47 @@ unsigned long* ocall_pointer_unsigned_long(
         psize);
 }
 
+unsigned long long* ocall_pointer_unsigned_long_long(
+    unsigned long long* p1,
+    unsigned long long* p2,
+    unsigned long long* p3,
+    unsigned long long* p4,
+    unsigned long long* p5,
+    unsigned long long* p6,
+    unsigned long long* p7,
+    unsigned long long* p8,
+    unsigned long long* p9,
+    unsigned long long* p10,
+    unsigned long long* p11,
+    unsigned long long* p12,
+    unsigned long long* p13,
+    unsigned long long* p14,
+    unsigned long long* p15,
+    unsigned long long* p16,
+    int pcount,
+    int psize)
+{
+    return ocall_pointer_fun_impl(
+        p1,
+        p2,
+        p3,
+        p4,
+        p5,
+        p6,
+        p7,
+        p8,
+        p9,
+        p10,
+        p11,
+        p12,
+        p13,
+        p14,
+        p15,
+        p16,
+        pcount,
+        psize);
+}
+
 long double* ocall_pointer_long_double(
     long double* p1,
     long double* p2,
@@ -1204,9 +1247,9 @@ long double* ocall_pointer_long_double(
 
 void ocall_pointer_assert_all_called()
 {
-    // Each of the 16 functions above is called twice.
+    // Each of the 17 functions above is called twice.
     // Once with arrays and then with nulls.
-    int expected_num_calls = 16 * 2;
+    int expected_num_calls = 17 * 2;
 
     // Account for enabled non-portable types.
     for (size_t i = 0; i < OE_COUNTOF(g_enabled); ++i)
@@ -1241,6 +1284,8 @@ void ocall_count_attribute_all_types(
     int* b17,
     int* b18,
     int* b19,
+    int* b20,
+    int* b21,
     char char_count,
     short short_count,
     int int_count,
@@ -1259,6 +1304,8 @@ void ocall_count_attribute_all_types(
     uint64_t uint64_t_count,
     wchar_t wchar_t_count,
     long long long_long_count,
+    unsigned long unsigned_long_count,
+    unsigned long long unsigned_long_long_count,
     long double long_double_count)
 {
 }
@@ -1283,6 +1330,8 @@ void ocall_size_attribute_all_types(
     int* b17,
     int* b18,
     int* b19,
+    int* b20,
+    int* b21,
     char char_size,
     short short_size,
     int int_size,
@@ -1301,6 +1350,8 @@ void ocall_size_attribute_all_types(
     uint64_t uint64_t_size,
     wchar_t wchar_t_size,
     long long long_long_size,
+    unsigned long unsigned_long_size,
+    unsigned long long unsigned_long_long_size,
     long double long_double_size)
 {
 }

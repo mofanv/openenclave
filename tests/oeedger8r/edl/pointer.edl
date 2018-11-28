@@ -631,6 +631,39 @@ enclave {
             int psize
         );
 
+	public unsigned long long* ecall_pointer_unsigned_long_long(
+            // No count or size, defaults to 1.
+            [in] unsigned long long* p1,
+            [in,out] unsigned long long* p2,
+            [out] unsigned long long* p3,
+           
+	    // count specifies number of elements.
+            [in, count=16] unsigned long long* p4,
+            [in,out, count=16] unsigned long long* p5,
+            [out, count=16] unsigned long long* p6,
+          
+	    // size specifies size in bytes.
+            [in, size=80] unsigned long long* p7,
+            [in, out, size=80] unsigned long long* p8,
+            [in, size=80] unsigned long long* p9,
+         
+	    // user handled.
+            [user_check] unsigned long long* p10,
+        
+	    // count as parameter
+            [in, count=pcount] unsigned long long* p11,
+            [in,out, count=pcount] unsigned long long* p12,
+            [out, count=pcount] unsigned long long* p13,
+        
+            // size as parameter
+            [in, size=psize] unsigned long long* p14,
+            [in,out, size=psize] unsigned long long* p15,
+            [out, size=psize] unsigned long long* p16,
+            
+	    int pcount,
+            int psize
+        );
+
         public long double* ecall_pointer_long_double(
             // No count or size, defaults to 1.
             [in] long double* p1,
@@ -685,7 +718,9 @@ enclave {
             [in, count=uint64_t_count] int* b16,            
             [in, count=wchar_t_count] int* b17,            
             [in, count=long_long_count] int* b18,            
-            [in, count=long_double_count] int* b19,   
+            [in, count=unsigned_long_count] int* b19,            
+            [in, count=unsigned_long_long_count] int* b20,            
+            [in, count=long_double_count] int* b21,   
             char char_count,
             short short_count,
             int int_count,
@@ -704,6 +739,8 @@ enclave {
             uint64_t uint64_t_count,
             wchar_t wchar_t_count,
             long long long_long_count,
+            unsigned long unsigned_long_count,
+            unsigned long long unsigned_long_long_count,
             long double long_double_count
         );
 
@@ -726,7 +763,9 @@ enclave {
             [in, size=uint64_t_size] int* b16,        
             [in, size=wchar_t_size] int* b17,            
             [in, size=long_long_size] int* b18,            
-            [in, size=long_double_size] int* b19,                   
+            [in, size=unsigned_long_size] int* b19,            
+            [in, size=unsigned_long_long_size] int* b20,            
+            [in, size=long_double_size] int* b21,                   
             char char_size,
             short short_size,
             int int_size,
@@ -745,6 +784,8 @@ enclave {
             uint64_t uint64_t_size,
             wchar_t wchar_t_size,
             long long long_long_size,
+            unsigned long unsigned_long_size,
+            unsigned long long unsigned_long_long_size,
             long double long_double_size            
         );  
 
@@ -1381,6 +1422,39 @@ enclave {
             int psize
         );
 
+	unsigned long long* ocall_pointer_unsigned_long_long(
+            // No count or size, defaults to 1.
+            [in] unsigned long long* p1,
+            [in,out] unsigned long long* p2,
+            [out] unsigned long long* p3,
+           
+ 	    // count specifies number of elements.
+            [in, count=16] unsigned long long* p4,
+            [in,out, count=16] unsigned long long* p5,
+            [out, count=16] unsigned long long* p6,
+          
+	    // size specifies size in bytes.
+            [in, size=80] unsigned long long* p7,
+            [in, out, size=80] unsigned long long* p8,
+            [in, size=80] unsigned long long* p9,
+         
+	    // user handled.
+            [user_check] unsigned long long* p10,
+        
+            // count as parameter
+            [in, count=pcount] unsigned long long* p11,
+            [in,out, count=pcount] unsigned long long* p12,
+            [out, count=pcount] unsigned long long* p13,
+       
+	    // size as parameter
+            [in, size=psize] unsigned long long* p14,
+            [in,out, size=psize] unsigned long long* p15,
+            [out, size=psize] unsigned long long* p16,
+        
+	    int pcount,
+            int psize
+        );
+
         long double* ocall_pointer_long_double(
             // No count or size, defaults to 1.
             [in] long double* p1,
@@ -1435,7 +1509,9 @@ enclave {
             [in, count=uint64_t_count] int* b16,    
             [in, count=wchar_t_count] int* b17,            
             [in, count=long_long_count] int* b18,            
-            [in, count=long_double_count] int* b19,                     
+            [in, count=unsigned_long_count] int* b19,         
+            [in, count=unsigned_long_long_count] int* b20,        
+            [in, count=long_double_count] int* b21,                     
             char char_count,
             short short_count,
             int int_count,
@@ -1454,6 +1530,8 @@ enclave {
             uint64_t uint64_t_count,
             wchar_t wchar_t_count,
             long long long_long_count,
+            unsigned long unsigned_long_count,
+            unsigned long long unsigned_long_long_count,
             long double long_double_count            
         );
 
@@ -1476,7 +1554,9 @@ enclave {
             [in, size=uint64_t_size] int* b16,           
             [in, size=wchar_t_size] int* b17,            
             [in, size=long_long_size] int* b18,            
-            [in, size=long_double_size] int* b19,               
+            [in, size=unsigned_long_size] int* b19,            
+            [in, size=unsigned_long_long_size] int* b20,        
+            [in, size=long_double_size] int* b21,               
             char char_size,
             short short_size,
             int int_size,
@@ -1495,6 +1575,8 @@ enclave {
             uint64_t uint64_t_size,
             wchar_t wchar_t_size,
             long long long_long_size,
+            unsigned long unsigned_long_size,
+            unsigned long long unsigned_long_long_size,
             long double long_double_size
         );      
 

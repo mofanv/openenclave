@@ -27,7 +27,8 @@ void test_basic_edl_ocalls()
             15,
             16,
             17,
-            18) == OE_OK);
+            18,
+            19) == OE_OK);
 
     {
         char ret = 0;
@@ -126,6 +127,12 @@ void test_basic_edl_ocalls()
     }
 
     {
+        unsigned long long ret = 0;
+        OE_TEST(ocall_ret_unsigned_long_long(&ret) == OE_OK);
+        OE_TEST(ret == 20202020);
+    }
+
+    {
         OE_TEST(ocall_ret_void() == OE_OK);
     }
 
@@ -178,7 +185,8 @@ void ecall_basic_types(
     uint16_t arg13,
     uint32_t arg14,
     uint64_t arg15,
-    long long arg16)
+    long long arg16,
+    unsigned long long arg17)
 {
     ecall_basic_types_args_t args;
 
@@ -199,6 +207,7 @@ void ecall_basic_types(
     check_type<uint32_t>(args.arg14);
     check_type<uint64_t>(args.arg15);
     check_type<long long>(args.arg16);
+    check_type<unsigned long long>(args.arg17);
 
     OE_TEST(arg1 == '?');
     OE_TEST(arg2 = 3);
@@ -216,6 +225,7 @@ void ecall_basic_types(
     OE_TEST(arg14 = 16);
     OE_TEST(arg15 = 17);
     OE_TEST(arg16 = 18);
+    OE_TEST(arg17 = 19);
 }
 
 void ecall_basic_non_portable_types(
@@ -366,6 +376,13 @@ long double ecall_ret_long_double()
 {
     check_return_type<ecall_ret_long_double_args_t, long double>();
     return 0.191919;
+}
+
+unsigned long long ecall_ret_unsigned_long_long()
+{
+    check_return_type<ecall_ret_unsigned_long_long_args_t,
+                      unsigned long long>();
+    return 20202020;
 }
 
 void ecall_ret_void()
