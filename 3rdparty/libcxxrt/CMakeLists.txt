@@ -1,16 +1,29 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# Compile CXXRT
+# Compile libcxx for Open Enclave. Some of these build rules emulate
+# that found in the original sources, but instead this builds an object library.
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-tautological-compare")
+add_library(cxxrt OBJECT
+  libcxxrt/src/dynamic_cast.cc
+  libcxxrt/src/exception.cc
+  libcxxrt/src/guard.cc
+  libcxxrt/src/stdexcept.cc
+  libcxxrt/src/typeinfo.cc
+  libcxxrt/src/memory.cc
+  libcxxrt/src/auxhelper.cc
+  libcxxrt/src/libelftc_dem_gnu3.c)
 
-# build cxxrt sources passing additional options
-add_subdirectory(libcxxrt/src)
-target_compile_options(cxxrt-static PRIVATE
-    -fPIC
-    # cannot use add_link_libraries on out-of-dir target
-    -nostdinc $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>
-    -I${OE_INCDIR}/openenclave/libc
-    )
-add_dependencies(cxxrt-static oelibc_includes)
+set_property(SOURCE libcxxrt/src/exception.cc PROPERTY COMPILE_FLAGS -Wno-unused-variable)
+
+set_property(TARGET cxxrt PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+target_compile_options(cxxrt PRIVATE
+  -Wno-tautological-compare
+  -nostdinc
+  $<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>)
+
+target_compile_definitions(cxxrt PRIVATE -D_GNU_SOURCE)
+
+add_dependencies(cxxrt oelibc_includes)
+target_include_directories(cxxrt PRIVATE ${OE_INCDIR}/openenclave/libc)
