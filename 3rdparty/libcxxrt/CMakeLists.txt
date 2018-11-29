@@ -25,5 +25,4 @@ target_compile_options(cxxrt PRIVATE
 
 target_compile_definitions(cxxrt PRIVATE -D_GNU_SOURCE)
 
-add_dependencies(cxxrt oelibc_includes)
-target_include_directories(cxxrt PRIVATE ${OE_INCDIR}/openenclave/libc)
+target_link_libraries(cxxrt PUBLIC oelibc_includes)
