@@ -46,7 +46,7 @@ enclave {
 
     struct GetReport_Result {
         int result;
-        char report_buffer[1024];
+        char report_buffer[4096];
         size_t report_buffer_size;
     };
 

@@ -86,7 +86,7 @@ class OEHostTest : public TrustedAppTest {
 
 TEST_F(OEHostTest, get_report_v1_Success)
 {
-    uint8_t report_buffer[1024];
+    uint8_t report_buffer[4096];
     size_t report_buffer_size = sizeof(report_buffer);
 
     oe_result_t oeResult = oe_get_report_v1(GetOEEnclave(),
@@ -94,15 +94,16 @@ TEST_F(OEHostTest, get_report_v1_Success)
                                             NULL, // opt_params,
                                             0,    // opt_params_size,
                                             report_buffer,
-                                            &report_buffer_size);
+                                            &report_buffer_size); // THIS ONE WILL HAPPILY OVERFLOW
     EXPECT_EQ(OE_OK, oeResult);
 
     oe_report_t parsed_report;
     oeResult = oe_parse_report(report_buffer, report_buffer_size, &parsed_report);
-    EXPECT_OPTEE_SGX_DIFFERENCE(OE_OK, OE_UNSUPPORTED, oeResult);
+    EXPECT_EQ(OE_OK, oeResult);
 
+    // THIS WILL HAPPILY USE SMALL BUFFER
     oeResult = oe_verify_report(GetOEEnclave(), report_buffer, report_buffer_size, NULL);
-    EXPECT_OPTEE_SGX_DIFFERENCE(OE_OK, OE_UNSUPPORTED, oeResult);
+    EXPECT_EQ(OE_OK, oeResult);
 }
 
 TEST_F(OEHostTest, get_report_v2_Success)
@@ -120,10 +121,10 @@ TEST_F(OEHostTest, get_report_v2_Success)
 
     oe_report_t parsed_report;
     oeResult = oe_parse_report(report_buffer, report_buffer_size, &parsed_report);
-    EXPECT_OPTEE_SGX_DIFFERENCE(OE_OK, OE_UNSUPPORTED, oeResult);
+    EXPECT_EQ(OE_OK, oeResult);
 
     oeResult = oe_verify_report(GetOEEnclave(), report_buffer, report_buffer_size, NULL);
-    EXPECT_OPTEE_SGX_DIFFERENCE(OE_OK, OE_UNSUPPORTED, oeResult);
+    EXPECT_EQ(OE_OK, oeResult);
 
     oe_free_report(report_buffer);
 }
@@ -190,7 +191,7 @@ TEST_F(OEHostTest, get_target_info_v1_Success)
 #endif
 
     oeResult = oe_verify_report(GetOEEnclave(), report_buffer, report_buffer_size, NULL);
-    EXPECT_OPTEE_SGX_DIFFERENCE(OE_OK, OE_UNSUPPORTED, oeResult);
+    EXPECT_EQ(OE_OK, oeResult);
 }
 
 TEST_F(OEHostTest, get_target_info_v2_Success)

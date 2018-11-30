@@ -6,6 +6,7 @@
 
 #include <openenclave/enclave.h>
 #include <sgx_utils.h>
+#include <mbedtls/x509_crt.h>
 
 #include "../oeresult.h"
 #include "cyres_optee.h"
@@ -31,6 +32,43 @@ oe_result_t oe_verify_report(
     size_t report_size,
     oe_report_t* parsed_report)
 {
-    /* Not supported */
-    return OE_UNSUPPORTED;
+    oe_result_t oeResult = OE_OK;
+    if (parsed_report != NULL)
+    {
+        oeResult = oe_parse_report(report, report_size, parsed_report);
+        if (oeResult != OE_OK)
+        {
+            return oeResult;
+        }
+    }
+
+    mbedtls_x509_crt chain;
+    mbedtls_x509_crt_init(&chain);
+    int res = mbedtls_x509_crt_parse(&chain, report, report_size);
+    if (res != 0)
+    {
+        oeResult = OE_FAILURE;
+        goto Cleanup;
+    }
+
+    if (chain.next == NULL ||
+        chain.next->next != NULL)
+    {
+        oeResult = OE_FAILURE;
+        goto Cleanup;
+    }
+
+    uint32_t validation_flags = 0;
+    res = mbedtls_x509_crt_verify(
+        &chain, chain.next, NULL, NULL, &validation_flags, NULL, NULL);
+    if (res != 0 || validation_flags != 0)
+    {
+        oeResult = OE_FAILURE;
+        goto Cleanup;
+    }
+
+Cleanup:
+    mbedtls_x509_crt_free(&chain);
+
+    return oeResult;
 }

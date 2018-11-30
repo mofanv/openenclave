@@ -69,6 +69,7 @@ usdk-tests: gtest usdk oesocket_host oestdio_host
 usdk-samples: usdk oesocket_host oestdio_host
 	make -C samples/sockets/Untrusted/SampleClientApp
 	make -C samples/sockets/Untrusted/SampleServerApp
+	make -C samples/helloworld/HelloWorldHost
 
 # Trusted SDK
 # -----------
@@ -141,6 +142,7 @@ usdk-tests-clean:
 usdk-samples-clean:
 	make -C samples/sockets/Untrusted/SampleClientApp clean
 	make -C samples/sockets/Untrusted/SampleServerApp clean
+	make -C samples/helloworld/HelloWorldHost clean
 
 .PHONY: tsdk-clean
 tsdk-clean:

@@ -111,7 +111,7 @@ oe_result_t ecall_TestOERandom()
 
 oe_result_t ecall_TestOEGetReportV1(uint32_t flags)
 {
-    uint8_t report_buffer[1024];
+    uint8_t report_buffer[4096];
     size_t report_buffer_size = sizeof(report_buffer);
     uint8_t report_data[OE_REPORT_DATA_SIZE] = { 0 };
     size_t report_data_size = OE_REPORT_DATA_SIZE;
@@ -129,14 +129,14 @@ oe_result_t ecall_TestOEGetReportV1(uint32_t flags)
 
     oe_report_t parsed_report;
     oeResult = oe_parse_report(report_buffer, report_buffer_size, &parsed_report);
-    if (VERIFY_OPTEE_SGX(OE_OK, OE_UNSUPPORTED, oeResult)) {
+    if (oeResult != OE_OK) {
         return OE_FAILURE;
     }
 
     oeResult = oe_verify_report(report_buffer,
         report_buffer_size,
         NULL);
-    if (VERIFY_OPTEE_SGX(OE_OK, OE_UNSUPPORTED, oeResult)) {
+    if (oeResult != OE_OK) {
         return OE_FAILURE;
     }
 
@@ -163,7 +163,7 @@ oe_result_t ecall_TestOEGetReportV2(uint32_t flags)
 
     oe_report_t parsed_report;
     oeResult = oe_parse_report(report_buffer, report_buffer_size, &parsed_report);
-    if (VERIFY_OPTEE_SGX(OE_OK, OE_UNSUPPORTED, oeResult)) {
+    if (oeResult != OE_OK) {
         oe_free_report(report_buffer);
         return OE_FAILURE;
     }
@@ -172,7 +172,7 @@ oe_result_t ecall_TestOEGetReportV2(uint32_t flags)
         report_buffer_size,
         NULL);
     oe_free_report(report_buffer);
-    if (VERIFY_OPTEE_SGX(OE_OK, OE_UNSUPPORTED, oeResult)) {
+    if (oeResult != OE_OK) {
         return OE_FAILURE;
     }
 
@@ -181,7 +181,7 @@ oe_result_t ecall_TestOEGetReportV2(uint32_t flags)
 
 oe_result_t ecall_TestOEGetTargetInfoV1(uint32_t flags)
 {
-    uint8_t report_buffer[1024];
+    uint8_t report_buffer[4096];
     size_t report_buffer_size = sizeof(report_buffer);
     uint8_t report_data[OE_REPORT_DATA_SIZE] = { 0 };
     size_t report_data_size = OE_REPORT_DATA_SIZE;

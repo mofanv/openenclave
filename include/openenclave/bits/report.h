@@ -103,6 +103,12 @@ typedef struct _oe_identity
     /** The Product ID for the enclave.
      * For SGX enclaves, this is the ISVPRODID value. */
     uint8_t product_id[OE_PRODUCT_ID_SIZE];
+
+    /** The unique ID for the device. */
+    uint8_t device_unique_id[OE_UNIQUE_ID_SIZE];
+
+    /** The signer ID for the device. */
+    uint8_t device_signer_id[OE_SIGNER_ID_SIZE];
 } oe_identity_t;
 /**< typedef struct _oe_identity oe_identity_t*/
 

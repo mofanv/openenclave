@@ -22,6 +22,9 @@ int main(int argc, const char* argv[])
     int ret = 1;
     oe_enclave_t* enclave = NULL;
     uint32_t enclave_flags = 0;
+    uint8_t* report_buffer = NULL;
+    size_t report_buffer_size;
+    oe_report_t parsed_report = {0};
 
     if (argc != 2)
     {
@@ -33,7 +36,8 @@ int main(int argc, const char* argv[])
 #ifdef _DEBUG
     enclave_flags |= OE_ENCLAVE_FLAG_DEBUG;
 #endif
-    result = oe_create_helloworld_enclave(argv[1], 0, enclave_flags, NULL, 0, &enclave);
+    result = oe_create_helloworld_enclave(
+        argv[1], OE_ENCLAVE_TYPE_UNDEFINED, enclave_flags, NULL, 0, &enclave);
     if (result != OE_OK)
     {
         fprintf(
@@ -58,13 +62,87 @@ int main(int argc, const char* argv[])
     }
     if (hostResult != OE_OK)
     {
-        fprintf(stderr, "OCALL failed: result=%u", hostResult);
+        fprintf(stderr, "OCALL failed: result=%u\n", hostResult);
         goto exit;
     }
+
+    result = oe_get_report_v2(enclave, 0, NULL, 0, &report_buffer, &report_buffer_size);
+    if (result != OE_OK)
+    {
+        fprintf(stderr, "Failed to obtain enclave report: result=%u\n", result);
+        goto exit;
+    }
+
+    result = oe_parse_report(report_buffer, report_buffer_size, &parsed_report);
+    if (result != OE_OK)
+    {
+        fprintf(stderr, "Failed to parse enclave report: result=%u\n", result);
+        goto exit;
+    }
+
+    const char *enclaveType;
+    switch (parsed_report.type)
+    {
+        case OE_ENCLAVE_TYPE_UNDEFINED:
+            enclaveType = "Undefined";
+            break;
+
+        case OE_ENCLAVE_TYPE_SGX:
+            enclaveType = "SGX";
+            break;
+
+        case OE_ENCLAVE_TYPE_TRUSTZONE:
+            enclaveType = "TrustZone";
+            break;
+
+        default:
+            enclaveType = "Unknown";
+            break;
+    }
+
+    printf("Enclave Attestation Report:\n");
+    printf("\tType: %s\n", enclaveType);
+    printf("\tID Version: %d\n", parsed_report.identity.id_version);
+    printf("\tSecurity Version: %d\n", parsed_report.identity.security_version);
+    printf("\tAttributes: 0x%llx\n", parsed_report.identity.attributes);
+    printf("\tProduct ID: ");
+    for (int i = 0; i < sizeof(parsed_report.identity.product_id); i++)
+    {
+        printf("%02x", parsed_report.identity.product_id[i]);
+    }
+    putchar('\n');
+    printf("\tUnique ID: ");
+    for (int i = 0; i < sizeof(parsed_report.identity.unique_id); i++)
+    {
+        printf("%02x", parsed_report.identity.unique_id[i]);
+    }
+    putchar('\n');
+    printf("\tSigner ID: ");
+    for (int i = 0; i < sizeof(parsed_report.identity.signer_id); i++)
+    {
+        printf("%02x", parsed_report.identity.signer_id[i]);
+    }
+    putchar('\n');
+
+    printf("\tDevice Unique ID: ");
+    for (int i = 0; i < sizeof(parsed_report.identity.device_unique_id); i++)
+    {
+        printf("%02x", parsed_report.identity.device_unique_id[i]);
+    }
+    putchar('\n');
+    printf("\tDevice Signer ID: ");
+    for (int i = 0; i < sizeof(parsed_report.identity.device_signer_id); i++)
+    {
+        printf("%02x", parsed_report.identity.device_signer_id[i]);
+    }
+    putchar('\n');
 
     ret = 0;
 
 exit:
+    if (report_buffer)
+        oe_free_report(report_buffer);
+
     // Clean up the enclave if we created one
     if (enclave)
         oe_terminate_enclave(enclave);
